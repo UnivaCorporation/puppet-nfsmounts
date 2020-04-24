@@ -1,0 +1,4 @@
+---
+
+nfsmounts::mounts: {}
+nfsmounts::mountpoint_pkg: util-linux

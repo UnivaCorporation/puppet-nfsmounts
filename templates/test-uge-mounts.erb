@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+<% @mounts.each_key do |mount_path| %>
+mountpoint <%= mount_path %>
+<% end %>

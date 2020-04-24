@@ -1,0 +1,86 @@
+{
+    "author": "Tom Downes",
+    "dependencies": [
+        {
+          "version_requirement": ">= 2.6.0 < 3.0.0",
+          "name": "camptocamp/systemd"
+        },
+        {
+            "name": "puppetlabs/stdlib",
+            "version_requirement": ">= 4.13.0 < 7.0.0"
+        }
+    ],
+    "license": "Apache-2.0",
+    "name": "univa-nfsmounts",
+    "operatingsystem_support": [
+        {
+            "operatingsystem": "RedHat",
+            "operatingsystemrelease": [
+                "6",
+                "7",
+                "8"
+            ]
+        },
+        {
+            "operatingsystem": "CentOS",
+            "operatingsystemrelease": [
+                "6",
+                "7",
+                "8"
+            ]
+        },
+        {
+            "operatingsystem": "OracleLinux",
+            "operatingsystemrelease": [
+                "6",
+                "7",
+                "8"
+            ]
+        },
+        {
+            "operatingsystem": "Scientific",
+            "operatingsystemrelease": [
+                "6",
+                "7"
+            ]
+        },
+        {
+            "operatingsystem": "Debian",
+            "operatingsystemrelease": [
+                "8",
+                "9",
+                "10"
+            ]
+        },
+        {
+            "operatingsystem": "SLES",
+            "operatingsystemrelease": [
+                "11 SP1",
+                "12",
+                "15"
+            ]
+        },
+        {
+            "operatingsystem": "Ubuntu",
+            "operatingsystemrelease": [
+                "16.04",
+                "18.04",
+                "20.04"
+            ]
+        }
+    ],
+    "project_page": "https://gitlab.tor.univa.com/tdownes/puppet-nfsmounts",
+    "requirements": [
+        {
+            "name": "puppet",
+            "version_requirement": ">= 4.10.0 < 7.0.0"
+        }
+    ],
+    "source": "https://gitlab.tor.univa.com/tdownes/puppet-nfsmounts.git",
+    "summary": "Flexibly manages NFS mounts",
+    "tags": [
+        "nfs",
+        "mounts"
+    ],
+    "version": "0.9.3"
+}
