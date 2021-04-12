@@ -33,7 +33,7 @@ class nfsmounts(
       $data_user = $opts["data_user"]
       $opts.delete("data_user")
     } else {
-      $date_user = ""
+      $data_user = ""
     }
 
     # Group of the mount point
