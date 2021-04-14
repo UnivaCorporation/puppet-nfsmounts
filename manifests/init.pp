@@ -2,8 +2,6 @@ class nfsmounts(
   Hash[Stdlib::Unixpath, Hash] $mounts,
   String $mountpoint_pkg) {
 
-  Exec <| tag == 'nfsmounts' |> -> Mount <| tag == 'nfsmounts' |>
-
   if defined('$tortuga_kit_uge::execd::svcname') and
     defined(Service[$tortuga_kit_uge::execd::svcname]) {
     Mount <| tag == 'nfsmounts' |> -> Service <| title == $tortuga_kit_uge::execd::svcname |>
@@ -23,50 +21,58 @@ class nfsmounts(
     # Owner of the mount point
     if has_key($opts, "mount_user") {
       $user = $opts["mount_user"]
-      $opts.delete("mount_user")
+      $opts_1 = $opts.delete("mount_user")
     } else {
       $user = "root"
+      $opts_1 = $opts
     }
 
     # Owner of the files in the mounted filesystem
     if has_key($opts, "data_user") {
       $data_user = $opts["data_user"]
-      $opts.delete("data_user")
+      $opts_2 = $opts_1.delete("data_user")
     } else {
-      $date_user = ""
+      $data_user = ""
+      $opts_2 = $opts_1
     }
 
     # Group of the mount point
     if has_key($opts, "mount_group") {
       $group = $opts["mount_group"]
-      $opts.delete("mount_group")
+      $opts_3 = $opts_2.delete("mount_group")
     } else {
       $group = "root"
+      $opts_3 = $opts_2
     }
 
     # Group of the files in the moutned filesystem
     if has_key($opts, "data_group") {
       $data_group = $opts["data_group"]
-      $opts.delete("data_group")
+      $opts_4 = $opts_3.delete("data_group")
     } else {
       $data_group = ""
+      $opts_4 = $opts_3
     }
 
     # Perms of the mount point
     if has_key($opts, "mount_perms") {
       $perms = $opts["mount_perms"]
-      $opts.delete("mount_perms")
+      $opts_5 = $opts_4.delete("mount_perms")
     } else {
       $perms = "0755"
+      $opts_5 = $opts_4
     }
 
     # Perms on the files in the mounted filesystem
     if has_key($opts, "data_perms") {
       $data_perms = $opts["data_perms"]
-      $opts.delete("data_perms")
+      $opts_6 = $opts_5.delete("data_perms")
     } else {
-      $data_perms = "0755"
+      $data_perms = ""
+      $opts_6 = $opts_5
     }
+
+    $opts_final = $opts_6
 
     # Create the directory, recursively
     exec { "create ${dir}":
@@ -87,16 +93,18 @@ class nfsmounts(
 
     # Mount the filesystem
     mount { $dir:
-      * => $opts
+      *       => $opts_final,
+      require => File[$dir],
     }
 
     # Set the data ownership if required
     if $data_user != "" or $data_group != "" {
       exec { "set ${dir} owner":
         user    => "root",
-        command => "chown -R ${data_user}:${data_group} ${dir}/* && touch ${dir}/.data_owner_complete",
+        command => "chown -R ${data_user}:${data_group} ${dir}/* && touch ${dir}/.data_user_complete",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        creates => "${dir}/.data_owner_complete",
+        creates => "${dir}/.data_user_complete",
+        onlyif  => "ls ${dir}/*",
         require => Mount[$dir],
       }
     }
@@ -107,7 +115,8 @@ class nfsmounts(
         user    => "root",
         command => "chmod -R ${data_perms} ${dir}/* && touch ${dir}/.data_perms_complete",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        creates => "${dir}/.data_ownership_complete",
+        creates => "${dir}/.data_perms_complete",
+        onlyif  => "ls ${dir}/*",
         require => Mount[$dir],
       }
     }
