@@ -36,7 +36,7 @@ nfsmounts::mounts:
     options: defaults,ro
 ```
 
-Optional attributes can be added to set the ownership/permisisons on the mount point, and perform a one-time (recursive) setting of the ownership/permissions of the mounted filesystem (data). This can be done by adding one or more of the following attributes to the previous example:
+Optional attributes can be added to set the ownership/permissions on the mount point, and perform a one-time (recursive) setting of the ownership/permissions of the mounted filesystem (data). This can be done by adding one or more of the following attributes to the previous example:
 
 ```
 classes:
