@@ -46,10 +46,10 @@ nfsmounts::mounts:
   '/tmp/tasty/yummy':
     mount_user: tasty-user
     mount_group: yummy-group
-    mount_perms: 0755
+    mount_perms: "0755"
     data_user: tasty-user
     data_group: yummy-group
-    data_perms: 0755
+    data_perms: "0755"
     device: hostname-that-doesnt-exist.notadomain:/really/not/a/path
     ensure: unmounted
     fstype: nfs
